@@ -5,6 +5,11 @@ import codecs
 
 import torch
 from empathy_classifier import EmpathyClassifier
+import os
+import codecs
+
+# Ensure parent directory exists
+os.makedirs(os.path.dirname(args.output_path), exist_ok=True)
 
 '''
 Example:
