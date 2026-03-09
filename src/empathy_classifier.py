@@ -63,13 +63,23 @@ class EmpathyClassifier():
 		
 		for sent in seeker_posts:
 
+			# encoded_dict = self.tokenizer.encode_plus(
+			# 					sent,                      # Sentence to encode.
+			# 					add_special_tokens = True, # Add '[CLS]' and '[SEP]'
+			# 					max_length = 64,           # Pad & truncate all sentences.
+			# 					pad_to_max_length = True,
+			# 					return_attention_mask = True,   # Construct attn. masks.
+			# 					return_tensors = 'pt',     # Return pytorch tensors.
+			# 			)
 			encoded_dict = self.tokenizer.encode_plus(
 								sent,                      # Sentence to encode.
 								add_special_tokens = True, # Add '[CLS]' and '[SEP]'
 								max_length = 64,           # Pad & truncate all sentences.
 								pad_to_max_length = True,
-								return_attention_mask = True,   # Construct attn. masks.
-								return_tensors = 'pt',     # Return pytorch tensors.
+                padding="max_length",
+								truncation=True,        # explicitly truncate
+                return_attention_mask=True,
+                return_tensors="pt"
 						)
 			
 			input_ids_SP.append(encoded_dict['input_ids'])
