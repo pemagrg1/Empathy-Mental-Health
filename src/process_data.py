@@ -32,8 +32,19 @@ for row in csv_reader:
 
 	response_masked = response
 
-	response_tokenized = tokenizer.decode(tokenizer.encode_plus(response, add_special_tokens = True, max_length = 64, pad_to_max_length = True)['input_ids'], clean_up_tokenization_spaces=False)
+	# response_tokenized = tokenizer.decode(tokenizer.encode_plus(response, add_special_tokens = True, max_length = 64, pad_to_max_length = True)['input_ids'], clean_up_tokenization_spaces=False)
+	encoded = tokenizer(
+    response,
+    add_special_tokens=True,
+    max_length=64,
+    padding='max_length',
+    truncation=True,
+    return_tensors=None)
 
+	response_tokenized = tokenizer.decode(
+    encoded['input_ids'],
+    clean_up_tokenization_spaces=False
+	)
 	response_tokenized_non_padded = tokenizer.decode(tokenizer.encode_plus(response, add_special_tokens = True, max_length = 64, pad_to_max_length = False)['input_ids'], clean_up_tokenization_spaces=False)
 
 	response_words = tokenizer.tokenize(response_tokenized)
