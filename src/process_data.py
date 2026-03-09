@@ -1,4 +1,4 @@
-  import codecs
+import codecs
 import os
 import csv
 import re
