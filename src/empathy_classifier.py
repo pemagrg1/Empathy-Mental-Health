@@ -17,9 +17,10 @@ from sklearn.metrics import f1_score
 from transformers import RobertaTokenizer
 from torch.utils.data import DataLoader, RandomSampler, SequentialSampler
 from torch.utils.data import TensorDataset, random_split
+from torch.optim import AdamW
 
 from models.models import BiEncoderAttentionWithRationaleClassification
-from transformers import AdamW, RobertaConfig
+from transformers import RobertaConfig
 
 import datetime
 
