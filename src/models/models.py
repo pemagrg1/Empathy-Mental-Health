@@ -10,7 +10,7 @@ from .configuration_roberta import RobertaConfig
 from .file_utils import add_start_docstrings, add_start_docstrings_to_callable
 
 from transformers import GPT2Model
-from transformers import AutoModelWithLMHead, AutoTokenizer
+from transformers import AutoTokenizer
 
 
 ROBERTA_PRETRAINED_MODEL_ARCHIVE_MAP = {
