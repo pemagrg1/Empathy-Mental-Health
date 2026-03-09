@@ -8,8 +8,6 @@ from empathy_classifier import EmpathyClassifier
 import os
 import codecs
 
-# Ensure parent directory exists
-os.makedirs(os.path.dirname(args.output_path), exist_ok=True)
 
 '''
 Example:
@@ -44,6 +42,8 @@ empathy_classifier = EmpathyClassifier(device,
 						EX_model_path = args.EX_model_path,)
 
 
+# Ensure parent directory exists
+os.makedirs(os.path.dirname(args.output_path), exist_ok=True)
 output_file = codecs.open(args.output_path, 'w', 'utf-8')
 csv_writer = csv.writer(output_file, delimiter=',', quotechar='"')
 
