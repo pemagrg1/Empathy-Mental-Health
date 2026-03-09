@@ -1,4 +1,4 @@
-import codecs
+  import codecs
 import os
 import csv
 import re
@@ -34,29 +34,29 @@ for row in csv_reader:
 
 	# response_tokenized = tokenizer.decode(tokenizer.encode_plus(response, add_special_tokens = True, max_length = 64, pad_to_max_length = True)['input_ids'], clean_up_tokenization_spaces=False)
 	encoded = tokenizer(
-    response,
-    add_special_tokens=True,
-    max_length=64,
-    padding='max_length',
-    truncation=True,
-    return_tensors=None)
+	response,
+	add_special_tokens=True,
+	max_length=64,
+	padding='max_length',
+	truncation=True,
+	return_tensors=None)
 
 	response_tokenized = tokenizer.decode(
-    encoded['input_ids'],
-    clean_up_tokenization_spaces=False
+	encoded['input_ids'],
+	clean_up_tokenization_spaces=False
 	)
 	# response_tokenized_non_padded = tokenizer.decode(tokenizer.encode_plus(response, add_special_tokens = True, max_length = 64, pad_to_max_length = False)['input_ids'], clean_up_tokenization_spaces=False)
-    encoded_non_padded = tokenizer(
-    response,
-    add_special_tokens=True,
-    max_length=64,
-    padding='max_length',
-    truncation=True,
-    return_tensors=None)
+	encoded_non_padded = tokenizer(
+	response,
+	add_special_tokens=True,
+	max_length=64,
+	padding='max_length',
+	truncation=True,
+	return_tensors=None)
 
 	response_tokenized_non_padded = tokenizer.decode(
-    encoded_non_padded['input_ids'],
-    clean_up_tokenization_spaces=False
+	encoded_non_padded['input_ids'],
+	clean_up_tokenization_spaces=False
 	)
 
 	response_words = tokenizer.tokenize(response_tokenized)
@@ -115,3 +115,4 @@ for row in csv_reader:
 
 input_file.close()
 output_file.close()
+
