@@ -63,25 +63,15 @@ class EmpathyClassifier():
 		attention_masks_SP = []
 		
 		for sent in seeker_posts:
-
-			# encoded_dict = self.tokenizer.encode_plus(
-			# 					sent,                      # Sentence to encode.
-			# 					add_special_tokens = True, # Add '[CLS]' and '[SEP]'
-			# 					max_length = 64,           # Pad & truncate all sentences.
-			# 					pad_to_max_length = True,
-			# 					return_attention_mask = True,   # Construct attn. masks.
-			# 					return_tensors = 'pt',     # Return pytorch tensors.
-			# 			)
-			encoded_dict = self.tokenizer.encode_plus(
-								sent,                      # Sentence to encode.
-								add_special_tokens = True, # Add '[CLS]' and '[SEP]'
-								max_length = 64,           # Pad & truncate all sentences.
-								pad_to_max_length = True,
-                padding="max_length",
-								truncation=True,        # explicitly truncate
-                return_attention_mask=True,
-                return_tensors="pt"
-						)
+			encoded_dict = self.tokenizer(
+				sent,
+				add_special_tokens=True,
+				max_length=64,
+				padding='max_length',
+				truncation=True,
+				return_attention_mask=True,
+				return_tensors='pt',
+			)
 			
 			input_ids_SP.append(encoded_dict['input_ids'])
 			attention_masks_SP.append(encoded_dict['attention_mask'])
@@ -91,14 +81,15 @@ class EmpathyClassifier():
 		attention_masks_RP = []
 
 		for sent in response_posts:
-			encoded_dict = self.tokenizer.encode_plus(
-								sent,                      # Sentence to encode.
-								add_special_tokens = True, # Add '[CLS]' and '[SEP]'
-								max_length = 64,           # Pad & truncate all sentences.
-								pad_to_max_length = True,
-								return_attention_mask = True,   # Construct attn. masks.
-								return_tensors = 'pt',     # Return pytorch tensors.
-						)
+			encoded_dict = self.tokenizer(
+				sent,
+				add_special_tokens=True,
+				max_length=64,
+				padding='max_length',
+				truncation=True,
+				return_attention_mask=True,
+				return_tensors='pt',
+			)
 			
 			input_ids_RP.append(encoded_dict['input_ids'])
 			attention_masks_RP.append(encoded_dict['attention_mask'])
@@ -112,9 +103,9 @@ class EmpathyClassifier():
 		dataset = TensorDataset(input_ids_SP, attention_masks_SP, input_ids_RP, attention_masks_RP)
 
 		dataloader = DataLoader(
-			dataset, # The test samples.
-			sampler = SequentialSampler(dataset), # Pull out batches sequentially.
-			batch_size = self.batch_size # Evaluate with this batch size.
+			dataset,
+			sampler=SequentialSampler(dataset),
+			batch_size=self.batch_size
 		)
 
 		self.model_ER.eval()
@@ -150,24 +141,24 @@ class EmpathyClassifier():
 														attention_mask_RP=b_input_mask_RP)
 
 				
-			logits_empathy_ER = logits_empathy_ER.detach().cpu().numpy().tolist()
-			predictions_ER = np.argmax(logits_empathy_ER, axis=1).flatten()
+		logits_empathy_ER = logits_empathy_ER.detach().cpu().numpy().tolist()
+		predictions_ER = np.argmax(logits_empathy_ER, axis=1).flatten()
 
-			logits_empathy_IP = logits_empathy_IP.detach().cpu().numpy().tolist()
-			predictions_IP = np.argmax(logits_empathy_IP, axis=1).flatten()
+		logits_empathy_IP = logits_empathy_IP.detach().cpu().numpy().tolist()
+		predictions_IP = np.argmax(logits_empathy_IP, axis=1).flatten()
 
-			logits_empathy_EX = logits_empathy_EX.detach().cpu().numpy().tolist()
-			predictions_EX = np.argmax(logits_empathy_EX, axis=1).flatten()
+		logits_empathy_EX = logits_empathy_EX.detach().cpu().numpy().tolist()
+		predictions_EX = np.argmax(logits_empathy_EX, axis=1).flatten()
 
 
-			logits_rationale_ER = logits_rationale_ER.detach().cpu().numpy()
-			predictions_rationale_ER = np.argmax(logits_rationale_ER, axis=2)
+		logits_rationale_ER = logits_rationale_ER.detach().cpu().numpy()
+		predictions_rationale_ER = np.argmax(logits_rationale_ER, axis=2)
 
-			logits_rationale_IP = logits_rationale_IP.detach().cpu().numpy()
-			predictions_rationale_IP = np.argmax(logits_rationale_IP, axis=2)
+		logits_rationale_IP = logits_rationale_IP.detach().cpu().numpy()
+		predictions_rationale_IP = np.argmax(logits_rationale_IP, axis=2)
 
-			logits_rationale_EX = logits_rationale_EX.detach().cpu().numpy()
-			predictions_rationale_EX = np.argmax(logits_rationale_EX, axis=2)
+		logits_rationale_EX = logits_rationale_EX.detach().cpu().numpy()
+		predictions_rationale_EX = np.argmax(logits_rationale_EX, axis=2)
 
 		return (logits_empathy_ER, predictions_ER, \
 		 	logits_empathy_IP, predictions_IP, \
